@@ -13,7 +13,7 @@ function downloadCaptions(captions){
     //split captions & send message to UI to display number of items to be displayed;
         //sendDisplaySliderMessage(10);
     //download captions from the url;
-
+    alert("from event.js" + captions);
 }
 
 function sendWordAndMeaningToUX(wordMeaningsList){
