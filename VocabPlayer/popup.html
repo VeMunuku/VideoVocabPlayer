@@ -2,20 +2,21 @@
 <html>
     <head>
         <title>Video Vocabulary Player</title>
-        <script src="jquery-3.1.0.min.js"></script>
-        <script src="popup.js"></script>
     </head>
     <body>
-
-        <body>
-            <h1>Video Vocabulary Player</h1>
-            <label for="meaninglanguage">Choose Meanings language:</label>
-            <select name="mlanguage" id="mlang">
-                <option value="english">English</option>
-                <option value="telugu">Telugu</option>
-                <option value="hindi">Hindi</option>
-                <option value="tamil">Tamil</option>
-            </select>
-        </body>
+		<h1>Video Vocabulary Player</h1>
+		<form action="#" method="post">
+			<label for="meaninglanguage">Choose Meanings language:</label>
+			<select name="mlang" id="mlang">
+				<option value="">Select language</option>
+				<option value="English">English</option>
+				<option value="Telugu">Telugu</option>
+				<option value="Hindi">Hindi</option>
+				<option value="Tamil">Tamil</option>
+			</select>
+		</form>
+		<p id="hello"></p>
     </body>
+	<script src="jquery-3.1.0.min.js"></script>
+	<script src="popup.js"></script>
 </html>

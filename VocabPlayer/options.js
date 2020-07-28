@@ -36,6 +36,10 @@ var data = [
   }
 ]; 
 */
+chrome.storage.sync.get('language', function(selected){
+	var lang = document.getElementById('language');
+	lang.innerHTML = selected.language;
+});
 chrome.storage.sync.get('bookmarkedWords', function(bookmarked){
 	var data = [];
 	if(bookmarked.bookmarkedWords){
