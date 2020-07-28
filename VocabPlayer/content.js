@@ -22,20 +22,19 @@ if(str.search("youtube") != -1){
     //extract subtitles for youtube.
 
     videoelement = document.querySelector('video')
-        videoelement.onpause = function () {
-            var str = "";
-            var SubtitleWindow = document.getElementById('caption-window-1')
-            if (SubtitleWindow) {
-                var Subtitles = SubtitleWindow.getElementsByClassName("ytp-caption-segment");
-                for (i = 0; i < Subtitles.length; i++) {
-                    str += Subtitles.item(i).textContent;
-                    //alert(str);
-                }
-                alert(str);
+    videoelement.onpause = function () {
+        var str = "";
+        var SubtitleWindow = document.getElementById('caption-window-1')
+        if (SubtitleWindow) {
+            var Subtitles = SubtitleWindow.getElementsByClassName("ytp-caption-segment");
+            for (i = 0; i < Subtitles.length; i++) {
+                str += Subtitles.item(i).textContent;
             }
-            //alert("from content");
-            chrome.runtime.sendMessage({ todo: "downloadCaptions", captions: str });
         }
+        //alert("from content : youtube: "+ str);
+        var port = chrome.runtime.connect({name: "SubtitlesContainer"});
+        port.postMessage({todo: "downloadCaptions", Subtitles : str});
+    }
 
 }
 

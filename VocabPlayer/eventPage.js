@@ -1,19 +1,23 @@
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-    if(request.todo == "downloadCaptions"){
-        //alert("EventPage : "+request.captions);
-        downloadCaptions(request.captions);
-    }
-});
+chrome.runtime.onConnect.addListener(function(port) {
+
+    console.assert(port.name == "SubtitlesContainer");
+    port.onMessage.addListener(function(msg) {
+        if(msg.todo == "downloadCaptions"){
+            //alert("EventPage : "+msg.Subtitles);
+            downloadCaptions(msg.Subtitles);
+        }
+    });
+  });
 
 function constructUrl(word, language){
     //return 'https://www.google.com/search?q=%22'+word+'%20meaning%20in%20'+language+'%22';
 }
 
-function downloadCaptions(captions){
+function downloadCaptions(Subtitles){
     //split captions & send message to UI to display number of items to be displayed;
         //sendDisplaySliderMessage(10);
     //download captions from the url;
-    alert("from event.js" + captions);
+    alert("DownloadCaptions: " + Subtitles);
 }
 
 function sendWordAndMeaningToUX(wordMeaningsList){
