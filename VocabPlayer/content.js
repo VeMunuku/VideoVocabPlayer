@@ -1,6 +1,29 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     if (request.todo == "displaySlider"){
+
         alert("Got display request. Displaying UX... " + request.nitems + " items to display");
+
+        //trigger UX slider with animation;
+
+        /* For Debugging purpose
+            var video = document.querySelector('video');
+            video.muted = !video.muted;
+            alert("Display Slider - Video Mute Status "+video.muted);
+        */
+        var vid = document.getElementsByTagName("video")[0];
+        var h = vid.offsetHeight;
+            var w = vid.offsetWidth;
+            console.log(h);
+            console.log(w);
+            document.getElementById("overlaydiv").style.width="300px";
+            document.getElementById("overlaydiv").style.height=h+"px";
+        vid.onpause = function() {
+          document.getElementById("overlaydiv").style.display = "block";
+        };
+
+        vid.onplay = function() {
+          document.getElementById("overlaydiv").style.display = "none";
+        };
     }
     else if(request.todo == 'updateSlider'){
         alert("Got words request. Updating UX... " + JSON.stringify(request.meaning));
