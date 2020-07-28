@@ -102,3 +102,68 @@ else if(str.search("https://www.netflix.com/") != -1) {
         } 
     }
 }
+
+document.body.appendChild(getHTMLOverLay());
+
+function getHTMLOverLay(){
+    var moverlay = document.createElement("DIV");
+        moverlay.id = "moverlaydiv";
+        $('#moverlaydiv').css('position','none');
+        $('#moverlaydiv').css('top','0');
+        $('#moverlaydiv').css('bottom','0');
+        $('#moverlaydiv').css('left','400px');
+        $('#moverlaydiv').css('right','0');
+        $('#moverlaydiv').css('display','block');
+        $('#moverlaydiv').css('background-color','rgba(0,0,0,0.5)');
+        $('#moverlaydiv').css('color','#fff');
+        $('#moverlaydiv').css('cursor','pointer');
+
+    var meaningList = document.createElement("DIV");
+        meaningList.id = "meaningListDiv";
+        $('#meaningListDiv').css('overflow','auto');
+        $('#meaningListDiv').css('height','450px');
+        
+    var vocablist = document.createElement("UL");
+        vocablist.id = "vocablistUL";
+        $('#vocablistUL').css('padding-right','10px');
+        $('#vocablistUL').css('padding-inline-start','10px');
+
+    moverlay.appendChild(meaningList);
+    meaningList.appendChild(vocablist);
+    vocablist.appendChild(getListItem("Word", "Meaning is the one that is written here"));
+    return moverlay;
+}
+
+function getListItem(word, meaning){
+    var vocablistItem = document.createElement("LI");
+        vocablistItem.id = "vocablistLI";
+        $('#vocablistLI').css('background-color','gray');
+        $('#vocablistLI').css('display','block');
+        $('#vocablistLI').css('margin-bottom','10px');
+
+    var divWord = document.createElement("DIV");
+        divWord.id = "word";
+        $('#word').css('padding-top','5px');
+        $('#word').css('padding-left','5px');
+        $('#word').css('margin-bottom','10px');
+        $('#word').text(word);
+
+    var iBookmark = document.createElement("I");
+        iBookmark.id = "bookmarkicon";
+        $('#bookmarkicon').css('font-size','18px');
+        $('#bookmarkicon').css('float','right');
+        $('#bookmarkicon').css('padding-right','10px');
+
+    var divMeaning = document.createElement("DIV");
+        divMeaning.id = "meaning";
+        $('#meaning').css('display','block');
+        $('#meaning').css('padding-top','5px');
+        $('#meaning').css('padding-bottom','5px');
+        $('#meaning').css('padding-left','5px');
+        $('#meaning').css('padding-right','5px');
+        $('#meaning').text(meaning);
+        vocablistItem.appendChild(divWord);
+            divWord.appendChild(iBookmark);
+        vocablistItem.appendChild(divMeaning);
+        return vocablistItem;
+}
