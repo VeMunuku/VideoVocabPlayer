@@ -20,7 +20,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 //        vid.onpause = function() {
           document.getElementById("overlaydiv").style.display = "block";
 //        };
-
         vid.onplay = function() {
           document.getElementById("overlaydiv").style.display = "none";
         };
