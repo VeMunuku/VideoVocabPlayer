@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 //Example to send message to EventPage
 //chrome.runtime.sendMessage({todo: "downloadCaptions", captions: cue});
 
-var str = document.URL;;
+var str = document.URL;
 if(str.search("youtube") != -1){
     //extract subtitles for youtube.
     videoelement = document.querySelector('video')
