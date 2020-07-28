@@ -18,6 +18,34 @@ function downloadCaptions(Subtitles){
         //sendDisplaySliderMessage(10);
     //download captions from the url;
     alert("DownloadCaptions: " + Subtitles);
+    list = Subtitles.toLowerCase().split(/[^A-Za-z]/);
+    //sendDisplaySliderMessage(list.length);
+    meanings = new Set();
+    list.forEach(element=> {
+        getDefinition(element, meanings);
+    });
+}
+
+function getDefinition(word, set){
+    var endpoint = "http://hackathonbox.westus2.cloudapp.azure.com:8000/h4ck4th0n/";
+    var url = endpoint + word + "/define";
+    //alert("Making request to: " + url);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var ret = JSON.parse(xhttp.responseText);
+            console.log(ret);
+            if(ret.error || ret.definitions.length == 0){
+                console.log("error");
+                set.add("error");
+            } else{
+                alert(ret.definitions[0]['definition']);
+                set.add(ret.definitions[0]['definition']);
+            }
+        }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
 }
 
 function sendWordAndMeaningToUX(wordMeaningsList){
