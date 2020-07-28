@@ -18,32 +18,31 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 //chrome.runtime.sendMessage({todo: "downloadCaptions", captions: cue});
 
 var str = document.URL;
+alert("starting " + str);
 if(str.search("youtube") != -1){
     //extract subtitles for youtube.
 
     videoelement = document.querySelector('video')
     videoelement.onpause = function () {
-        var str = "";
+        var cues = "";
         var SubtitleWindow = document.getElementById('caption-window-1')
         if (SubtitleWindow) {
             var Subtitles = SubtitleWindow.getElementsByClassName("ytp-caption-segment");
             for (i = 0; i < Subtitles.length; i++) {
-                str += Subtitles.item(i).textContent;
+                cues += Subtitles.item(i).textContent;
             }
         }
-        //alert("from content : youtube: "+ str);
+        //alert("from content : youtube: "+ cues);
         var port = chrome.runtime.connect({name: "SubtitlesContainer"});
-        port.postMessage({todo: "downloadCaptions", Subtitles : str});
+        port.postMessage({todo: "downloadCaptions", Subtitles : cues});
     }
 
 }
-
-else if(str.search("https://www.primevideo.com/detail/") != -1 || str.search("https://www.primevideo.com/storefront/home/") != -1){
+else if(str.search("https://www.primevideo.com/") != -1 ){
     //write for prime video.
     window.onload = function () {
         setInterval(showTime, 3000);
     }
-
     function showTime() {
         var video = document.querySelector('video');
         if(video){
@@ -68,9 +67,9 @@ else if(str.search("https://www.primevideo.com/detail/") != -1 || str.search("ht
                         }
                     }
                 }
-                /*if(cues.length)
-                    alert(cues);*/
-                chrome.runtime.sendMessage({todo: "downloadMeaningOfSelectedText", captions: cues});
+                //alert("from content : youtube: "+ cues);
+                var port = chrome.runtime.connect({name: "SubtitlesContainer"});
+                port.postMessage({todo: "downloadCaptions", Subtitles : cues});
             }
         }
     }
