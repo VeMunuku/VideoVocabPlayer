@@ -20,6 +20,23 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 var str = document.URL;
 if(str.search("youtube") != -1){
     //extract subtitles for youtube.
+
+    videoelement = document.querySelector('video')
+        videoelement.onpause = function () {
+            var str = "";
+            var SubtitleWindow = document.getElementById('caption-window-1')
+            if (SubtitleWindow) {
+                var Subtitles = SubtitleWindow.getElementsByClassName("ytp-caption-segment");
+                for (i = 0; i < Subtitles.length; i++) {
+                    str += Subtitles.item(i).textContent;
+                    //alert(str);
+                }
+                alert(str);
+            }
+            //alert("from content");
+            chrome.runtime.sendMessage({ todo: "downloadCaptions", captions: str });
+        }
+
 }
 
 else if(str.search("primevideo") != -1){
