@@ -7,6 +7,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
             video.muted = !video.muted;
             alert("Display Slider - Video Mute Status "+video.muted);
         */
+        var vid = document.getElementById("video");
+        vid.onpause = function() {
+          document.getElementById("overlaydiv").style.display = "block";
+        };
+
+        vid.onplay = function() {
+          document.getElementById("overlaydiv").style.display = "none";
+        };
     }
     else if(request.todo == 'updateSlider'){
         //have word meanings list; split them and update
