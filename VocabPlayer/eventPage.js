@@ -17,6 +17,11 @@ function downloadCaptions(Subtitles){
     var resp = JSON.parse(sortOrder({list: [...filtered_set]}));
     filtered_set.forEach(element=> {
         getDefinition(element, resp.answer);
+//    sendDisplaySliderMessage(list.length);
+//    meanings = new Set();
+//    list.forEach(element=> {
+//        getDefinition(element, meanings);
+//>>>>>>> made changes for frontend part
     });
 }
 

@@ -10,16 +10,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
             video.muted = !video.muted;
             alert("Display Slider - Video Mute Status "+video.muted);
         */
-        var vid = document.getElementsByTagName("video")[0];
+        var vid = document.getElementsByTagName("video")[0]; //can make global
         var h = vid.offsetHeight;
             var w = vid.offsetWidth;
             console.log(h);
             console.log(w);
             document.getElementById("overlaydiv").style.width="300px";
             document.getElementById("overlaydiv").style.height=h+"px";
-        vid.onpause = function() {
+//        vid.onpause = function() {
           document.getElementById("overlaydiv").style.display = "block";
-        };
+//        };
 
         vid.onplay = function() {
           document.getElementById("overlaydiv").style.display = "none";
