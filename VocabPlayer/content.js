@@ -7,13 +7,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
             video.muted = !video.muted;
             alert("Display Slider - Video Mute Status "+video.muted);
         */
-        var vid = document.getElementById("video");
+        var vid = document.querySelector('video');
         vid.onpause = function() {
-          document.getElementById("overlaydiv").style.display = "block";
+          //document.getElementById("overlaydiv").style.display = "block";
         };
 
         vid.onplay = function() {
-          document.getElementById("overlaydiv").style.display = "none";
+          //document.getElementById("overlaydiv").style.display = "none";
         };
     }
     else if(request.todo == 'updateSlider'){
@@ -30,6 +30,7 @@ if(str.search("youtube") != -1){
     //extract subtitles for youtube.
 
     videoelement = document.querySelector('video')
+    if(videoelement != null){
         videoelement.onpause = function () {
             var str = "";
             var SubtitleWindow = document.getElementById('caption-window-1')
@@ -39,11 +40,13 @@ if(str.search("youtube") != -1){
                     str += Subtitles.item(i).textContent;
                     //alert(str);
                 }
-                alert(str);
+                //alert(str);
             }
-            //alert("from content");
+            alert(str);
             chrome.runtime.sendMessage({ todo: "downloadCaptions", captions: str });
         }
+    }
+        
 
 }
 
