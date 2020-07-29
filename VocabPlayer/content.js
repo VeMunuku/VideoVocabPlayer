@@ -1,3 +1,6 @@
+var cues = "";
+var vtitle = "Video Title";
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.todo == "displaySlider") {
         //alert("Got display request. Displaying UX... " + request.nitems + " items to display");
@@ -27,6 +30,32 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         var next = inject_html_start + meaningslist_start + vocablist_start + n_boxes + vocablist_end + meaningslist_end + inject_html_end;
         video.insertAdjacentHTML('afterend', next);
         $("#video_overlays").fadeIn();
+
+        for (i = 0; i < request.nitems; i++) {
+            var lielement = document.getElementById("LIID_" + i);
+            lielement.addEventListener("click", function(){
+                var collection = lielement.getElementsByTagName('p');
+                var word = "";
+                var meaning = "";
+                var translated = "";
+                if(collection){
+                    for(var i = 0; i < collection.length; i++){
+                        var pelement = collection.item(i);
+                        if(i == 0)
+                            word = pelement.textContent;
+                        else if(i == 1)
+                            meaning = pelement.textContent;
+                        else if(i == 2)
+                            translated = pelement.textContent;
+                    }
+                    var d = new Date();
+                    var date = d.getMonth() + "/" + d.getDay()+"/"+d.getFullYear();
+                    var payload = '{"Word": "'+word+'","Meaning": "'+meaning+'","Translated": "'+translated+'","Video_Title": "'+vtitle+'","Caption": "'+cues+'","Date": "'+date+'"}';
+                    alert(payload);
+                    addBookmark(payload);
+                }
+            });
+        }
         console.log(next);
     }
 
@@ -66,7 +95,7 @@ if (str.search("youtube") != -1) {
     videoelement = document.querySelector('video');
     if (videoelement) {
         videoelement.onpause = function () {
-            var cues = "";
+            cues = "";
             var SubtitleWindow = document.getElementById('caption-window-1')
             if (SubtitleWindow) {
                 var Subtitles = SubtitleWindow.getElementsByClassName("ytp-caption-segment");
@@ -100,7 +129,7 @@ else if (str.search("https://www.primevideo.com/") != -1) {
         var videoelement = document.querySelector('video');
         if (videoelement) {
             videoelement.onpause = function () {
-                var cues = "";
+                cues = "";
                 var SubtitleWindow = document.getElementsByClassName("atvwebplayersdk-captions-text fg8afi5");
                 if (SubtitleWindow) {
                     var spansc = SubtitleWindow.item(0);
@@ -155,7 +184,7 @@ else if (str.search("https://www.netflix.com/") != -1) {
         videoelement = document.querySelector('video')
         if (videoelement) {
             videoelement.onpause = function () {
-                var cues = "";
+                cues = "";
                 var SubtitleWindow = document.getElementsByClassName('player-timedtext-text-container')
                 if (SubtitleWindow) {
                     var spansc = SubtitleWindow.item(0);
@@ -185,67 +214,13 @@ else if (str.search("https://www.netflix.com/") != -1) {
     }
 }
 
-// document.body.appendChild(getHTMLOverLay());
-
-// function getHTMLOverLay(){
-//     var moverlay = document.createElement("DIV");
-//         moverlay.id = "moverlaydiv";
-//         $('#moverlaydiv').css('position','none');
-//         $('#moverlaydiv').css('top','0');
-//         $('#moverlaydiv').css('bottom','0');
-//         $('#moverlaydiv').css('left','400px');
-//         $('#moverlaydiv').css('right','0');
-//         $('#moverlaydiv').css('display','block');
-//         $('#moverlaydiv').css('background-color','rgba(0,0,0,0.5)');
-//         $('#moverlaydiv').css('color','#fff');
-//         $('#moverlaydiv').css('cursor','pointer');
-
-//     var meaningList = document.createElement("DIV");
-//         meaningList.id = "meaningListDiv";
-//         $('#meaningListDiv').css('overflow','auto');
-//         $('#meaningListDiv').css('height','450px');
-
-//     var vocablist = document.createElement("UL");
-//         vocablist.id = "vocablistUL";
-//         $('#vocablistUL').css('padding-right','10px');
-//         $('#vocablistUL').css('padding-inline-start','10px');
-
-//     moverlay.appendChild(meaningList);
-//     meaningList.appendChild(vocablist);
-//     vocablist.appendChild(getListItem("Word", "Meaning is the one that is written here"));
-//     return moverlay;
-// }
-
-// function getListItem(word, meaning){
-//     var vocablistItem = document.createElement("LI");
-//         vocablistItem.id = "vocablistLI";
-//         $('#vocablistLI').css('background-color','gray');
-//         $('#vocablistLI').css('display','block');
-//         $('#vocablistLI').css('margin-bottom','10px');
-
-//     var divWord = document.createElement("DIV");
-//         divWord.id = "word";
-//         $('#word').css('padding-top','5px');
-//         $('#word').css('padding-left','5px');
-//         $('#word').css('margin-bottom','10px');
-//         $('#word').text(word);
-
-//     var iBookmark = document.createElement("I");
-//         iBookmark.id = "bookmarkicon";
-//         $('#bookmarkicon').css('font-size','18px');
-//         $('#bookmarkicon').css('float','right');
-//         $('#bookmarkicon').css('padding-right','10px');
-
-//     var divMeaning = document.createElement("DIV");
-//         divMeaning.id = "meaning";
-//         $('#meaning').css('display','block');
-//         $('#meaning').css('padding-top','5px');
-//         $('#meaning').css('padding-bottom','5px');
-//         $('#meaning').css('padding-left','5px');
-//         $('#meaning').css('padding-right','5px');
-//         $('#meaning').text(meaning);
-//         vocablistItem.appendChild(divWord);
-//             divWord.appendChild(iBookmark);
-//         vocablistItem.appendChild(divMeaning);
-//         return vocablistItem;
-// }
+function addBookmark(newBookmark){
+    chrome.storage.sync.get('bookmarkedWords', function(bookmarked){
+        newList = [];
+        if(bookmarked.bookmarkedWords){
+            newList = bookmarked.bookmarkedWords;
+        }
+        newList.push(newBookmark);
+        chrome.storage.sync.set({'bookmarkedWords': newList});
+    });
+}
