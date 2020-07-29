@@ -5,6 +5,12 @@ chrome.storage.sync.get('language', function(selected){
     else if(selected.language == "Hindi"){
         language_code = "hi";
     }
+    else if(selected.language == "Tamil"){
+        language_code = "ta";
+    }
+    else{
+        language_code = "hi";
+    }
 });
 
 chrome.runtime.onConnect.addListener(function(port) {
