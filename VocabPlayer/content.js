@@ -25,11 +25,12 @@ if(str.search("youtube") != -1){
                 cues += Subtitles.item(i).textContent + " ";
             }
         }
-        //alert("from content : youtube: "+ cues);
-        var port = chrome.runtime.connect({name: "SubtitlesContainer"});
-        port.postMessage({todo: "downloadCaptions", Subtitles : cues});
+        if(cues.length){
+            //alert("from content : youtube: "+ cues);
+            var port = chrome.runtime.connect({name: "SubtitlesContainer"});
+            port.postMessage({todo: "downloadCaptions", Subtitles : cues});
+        }
     }
-
 }
 else if(str.search("https://www.primevideo.com/") != -1 ){
     //write for prime video.
@@ -61,9 +62,11 @@ else if(str.search("https://www.primevideo.com/") != -1 ){
                         }
                     }
                 }
-                //alert("from content : AmazonPrime: "+ cues);
-                var port = chrome.runtime.connect({name: "SubtitlesContainer"});
-                port.postMessage({todo: "downloadCaptions", Subtitles : cues});
+                if(cues.length){
+                    //alert("from content : AmazonPrime: "+ cues);
+                    var port = chrome.runtime.connect({name: "SubtitlesContainer"});
+                    port.postMessage({todo: "downloadCaptions", Subtitles : cues});
+                }
             }
         }
     }
@@ -90,9 +93,12 @@ else if(str.search("https://www.netflix.com/") != -1) {
                             }
                         }
                 }
-                //alert("from content : NetFlix: " + cues);
-                var port = chrome.runtime.connect({ name: "SubtitlesContainer" });
-                port.postMessage({ todo: "downloadCaptions", Subtitles: cues });
+
+                if(cues.length){
+                    //alert("from content : NetFlix: " + cues);
+                    var port = chrome.runtime.connect({ name: "SubtitlesContainer" });
+                    port.postMessage({ todo: "downloadCaptions", Subtitles: cues });
+                }
             }
         } 
     }
