@@ -12,16 +12,15 @@ function downloadCaptions(Subtitles){
     alert("DownloadCaptions: " + Subtitles);
     list = Subtitles.toLowerCase().split(/[^A-Za-z]/);
     var filtered_set = new Set(list.filter(x => !consts_stopwords.has(x)));
-    alert(1);
     sendDisplaySliderMessage(filtered_set.size);
     alert(JSON.stringify({list: [...filtered_set]}));
-    var resp = sortOrder({list: [...filtered_set]});
+    var resp = JSON.parse(sortOrder({list: [...filtered_set]}));
     filtered_set.forEach(element=> {
-        getDefinition(element);
+        getDefinition(element, resp.answer);
     });
 }
 
-function getDefinition(word, set){
+function getDefinition(word, order){
     var endpoint = "http://hackathonbox.westus2.cloudapp.azure.com:8000/h4ck4th0n/";
     var url = endpoint + word + "/define";
     var xhttp = new XMLHttpRequest();
@@ -30,9 +29,9 @@ function getDefinition(word, set){
             var ret = JSON.parse(xhttp.responseText);
             console.log(ret);
             if(ret.error || ret.definitions.length == 0){
-                sendWordAndMeaningToUX({word: word, meaning: 'error'})
+                sendWordAndMeaningToUX({index: order.findIndex(x => x == word), word: word, meaning: 'error'})
             } else{
-                sendWordAndMeaningToUX({word: word, meaning: ret.definitions[0]['definition']})
+                sendWordAndMeaningToUX({index: order.findIndex(x => x == word), word: word, meaning: ret.definitions[0]['definition']})
             }
         }
     };
