@@ -16,10 +16,8 @@ function downloadCaptions(Subtitles){
     sendDisplaySliderMessage(filtered_set.size);
     alert(JSON.stringify({list: [...filtered_set]}));
     var resp = sortOrder({list: [...filtered_set]});
-    alert(resp);
-    meanings = new Set();
     filtered_set.forEach(element=> {
-        getDefinition(element, meanings);
+        getDefinition(element);
     });
 }
 
@@ -32,12 +30,9 @@ function getDefinition(word, set){
             var ret = JSON.parse(xhttp.responseText);
             console.log(ret);
             if(ret.error || ret.definitions.length == 0){
-                set.add(word + " : error");
                 sendWordAndMeaningToUX({word: word, meaning: 'error'})
             } else{
-                //alert(ret.word + " : " + ret.definitions[0]['definition']);
                 sendWordAndMeaningToUX({word: word, meaning: ret.definitions[0]['definition']})
-                set.add(ret.definitions[0]['definition']);
             }
         }
     };
