@@ -11,11 +11,11 @@ chrome.runtime.onConnect.addListener(function(port) {
 function downloadCaptions(Subtitles){
     alert("DownloadCaptions: " + Subtitles);
     list = Subtitles.toLowerCase().split(/[^A-Za-z]/);
-    set = new Set(list);
-    alert(consts_stopwords);
-    sendDisplaySliderMessage(set.size);
+    var filtered_set = new Set(list.filter(x => !consts_stopwords.has(x)));
+    alert(1);
+    sendDisplaySliderMessage(filtered_set.size);
     meanings = new Set();
-    set.forEach(element=> {
+    filtered_set.forEach(element=> {
         getDefinition(element, meanings);
     });
 }
