@@ -11,12 +11,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         var meaningslist_end = '</div>';
         var vocablist_start = '<ul id="vocablist" style="padding-right:10px;padding-inline-start:10px;">';
         var vocablist_end = '</ul>';
-        var one_empty_box = '<li id="eachrow" style="background-color: rgba(255,255,255,0.6);display: block;margin-bottom: 10px;position: relative;height: 120px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 10px;padding-left: 10px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><hr><p style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING">Loading...</p><hr><p  style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_TRANS"></p></li>';
+        var one_empty_box = '<li id="LIID" style="background-color: rgba(255,255,255,0.6);display: block;margin-bottom: 10px;position: relative;height: 120px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 10px;padding-left: 10px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><hr><p style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING">Loading...</p><hr><p  style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_TRANS"></p></li>';
 
 //        var one_empty_box = '<li><div><p id="PID_WORD">Word</p><p id="PID_MEANING">Meaning</p><p id="PID_TRANS">Translation</p></div></li>';
         var n_boxes = ''
         for (i = 0; i < request.nitems; i++) {
             var my_empty_box = (' ' + one_empty_box).slice(1);
+            my_empty_box = my_empty_box.replace("LIID", "LIID_" + i);
             my_empty_box = my_empty_box.replace("PID_WORD", "PID_WORD_" + i);
             my_empty_box = my_empty_box.replace("PID_MEANING", "PID_MEANING_" + i);
             my_empty_box = my_empty_box.replace("PID_TRANS", "PID_TRANS_" + i);
