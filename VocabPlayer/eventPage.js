@@ -14,6 +14,9 @@ function downloadCaptions(Subtitles){
     var filtered_set = new Set(list.filter(x => !consts_stopwords.has(x)));
     alert(1);
     sendDisplaySliderMessage(filtered_set.size);
+    alert(JSON.stringify({list: [...filtered_set]}));
+    var resp = sortOrder({list: [...filtered_set]});
+    alert(resp);
     meanings = new Set();
     filtered_set.forEach(element=> {
         getDefinition(element, meanings);
@@ -40,6 +43,16 @@ function getDefinition(word, set){
     };
     xhttp.open("GET", url, true);
     xhttp.send();
+}
+
+function sortOrder(list){
+    var endpoint = "http://hackathonbox.westus2.cloudapp.azure.com:8000/h4ck4th0n/";
+    var url = endpoint + "sort"
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", url, false);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(JSON.stringify(list));
+    return xhttp.responseText;
 }
 
 function sendWordAndMeaningToUX(wordMeaningsList){
