@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         var meaningslist_end = '</div>';
         var vocablist_start = '<ul id="vocablist" style="padding-right:10px;padding-inline-start:10px;">';
         var vocablist_end = '</ul>';
-        var one_empty_box = '<li id="eachrow" style="background-color: #DCDCDC;display: block;margin-bottom: 10px;position: relative;height: 90px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 5px;padding-left: 5px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD"></p><p style= "padding-top: 5px;padding-left: 5px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING"></p><p id="PID_TRANS"></p></li>';
+        var one_empty_box = '<li id="eachrow" style="background-color: #DCDCDC;display: block;margin-bottom: 10px;position: relative;height: 90px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 5px;padding-left: 5px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><p style= "padding-top: 5px;padding-left: 5px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING">Loading...</p><p id="PID_TRANS"></p></li>';
 
 //        var one_empty_box = '<li><div><p id="PID_WORD">Word</p><p id="PID_MEANING">Meaning</p><p id="PID_TRANS">Translation</p></div></li>';
         var n_boxes = ''
@@ -34,10 +34,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         var wordID = "PID_WORD_" + thisindex;
         var meaningID = "PID_MEANING_" + thisindex;
         var transID = "PID_TRANS_" + thisindex;
-//        alert(wordID + meaningID + transID);
         var wordp = document.getElementById(wordID);
         var meaningp = document.getElementById(meaningID);
         var transp = document.getElementById(transID);
+
+        // check for error boxes. and get rid of them.
+        if(request.meaning.meaning == "error"){
+            var delme = wordp.parentElement;
+            if(delme){
+                delme.querySelectorAll('*').forEach(n => n.remove());
+                delme.remove();
+            }    
+        }
+//        alert(wordID + meaningID + transID);
         wordp.innerHTML = request.meaning.word;
         meaningp.innerHTML = request.meaning.meaning;
         transp.innerHTML = ""; // none for now.
@@ -75,8 +84,6 @@ if(str.search("youtube") != -1){
             delme.remove();
         }
     }
-
-
 }
 else if(str.search("https://www.primevideo.com/") != -1 ){
     //write for prime video.
