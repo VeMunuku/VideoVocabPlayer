@@ -11,9 +11,10 @@ chrome.runtime.onConnect.addListener(function(port) {
 function downloadCaptions(Subtitles){
     alert("DownloadCaptions: " + Subtitles);
     list = Subtitles.toLowerCase().split(/[^A-Za-z]/);
-    sendDisplaySliderMessage(10);
+    set = new Set(list);
+    sendDisplaySliderMessage(set.size);
     meanings = new Set();
-    list.forEach(element=> {
+    set.forEach(element=> {
         getDefinition(element, meanings);
     });
 }
@@ -28,8 +29,10 @@ function getDefinition(word, set){
             console.log(ret);
             if(ret.error || ret.definitions.length == 0){
                 set.add(word + " : error");
+                sendWordAndMeaningToUX({word: word, meaning: 'error'})
             } else{
-                alert(ret.word + " : " + ret.definitions[0]['definition']);
+                //alert(ret.word + " : " + ret.definitions[0]['definition']);
+                sendWordAndMeaningToUX({word: word, meaning: ret.definitions[0]['definition']})
                 set.add(ret.definitions[0]['definition']);
             }
         }
@@ -40,7 +43,7 @@ function getDefinition(word, set){
 
 function sendWordAndMeaningToUX(wordMeaningsList){
     chrome.tabs.query({active: true, currentWindow:true}, function(tabs){
-        chrome.tabs.sendMessage(tabs[0].id, {todo: "updateSlider", nitems: wordMeaningsList});
+        chrome.tabs.sendMessage(tabs[0].id, {todo: "updateSlider", meaning: wordMeaningsList});
     });
 }
 

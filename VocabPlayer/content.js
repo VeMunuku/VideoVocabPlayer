@@ -1,10 +1,9 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-    alert(request.todo);
     if (request.todo == "displaySlider"){
-        alert("Got display request. Displaying UX... ");
+        alert("Got display request. Displaying UX... " + request.nitems + " items to display");
     }
     else if(request.todo == 'updateSlider'){
-        alert("Got words request. Updating UX... ");
+        alert("Got words request. Updating UX... " + JSON.stringify(request.meaning));
         //have word meanings list; split them and update
         //the UX;
     }
