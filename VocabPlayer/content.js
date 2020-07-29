@@ -50,6 +50,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                         else if(i == 2)
                             translated = pelement.textContent;
                     }
+                    a.currentTarget.style.backgroundColor = "#03cffc";
                     var res = word.split("/");
                     var d = new Date();
                     var date = d.getMonth() + "/" + d.getDay()+"/"+d.getFullYear();
