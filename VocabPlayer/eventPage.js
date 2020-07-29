@@ -12,6 +12,7 @@ function downloadCaptions(Subtitles){
     alert("DownloadCaptions: " + Subtitles);
     list = Subtitles.toLowerCase().split(/[^A-Za-z]/);
     set = new Set(list);
+    alert(consts_stopwords);
     sendDisplaySliderMessage(set.size);
     meanings = new Set();
     set.forEach(element=> {
