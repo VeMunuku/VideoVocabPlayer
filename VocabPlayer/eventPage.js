@@ -5,7 +5,6 @@ chrome.storage.sync.get('language', function(selected){
     else if(selected.language == "Hindi"){
         language_code = "hi";
     }
-    alert(language_code);
 });
 
 chrome.runtime.onConnect.addListener(function(port) {
