@@ -2,20 +2,20 @@ chrome.runtime.onConnect.addListener(function(port) {
     console.assert(port.name == "SubtitlesContainer");
     port.onMessage.addListener(function(msg) {
         if(msg.todo == "downloadCaptions"){
-            alert("EventPage : "+msg.Subtitles);
+            //alert("EventPage : "+msg.Subtitles);
             downloadCaptions(msg.Subtitles);
         }
     });
   });
 
 function downloadCaptions(Subtitles){
-    alert("DownloadCaptions: " + Subtitles);
+    //alert("DownloadCaptions: " + Subtitles);
     list = Subtitles.toLowerCase().split(/[^A-Za-z]/);
     var filtered_set = new Set(list.filter(x => !consts_stopwords.has(x)));
     if(filtered_set.size == 0)
         return;
     sendDisplaySliderMessage(filtered_set.size);
-    alert(JSON.stringify({list: [...filtered_set]}));
+    //alert(JSON.stringify({list: [...filtered_set]}));
     var resp = JSON.parse(sortOrder({list: [...filtered_set]}));
     filtered_set.forEach(element=> {
         getDefinition(element, resp.answer);
