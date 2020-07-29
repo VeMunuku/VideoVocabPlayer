@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         var meaningslist_end = '</div>';
         var vocablist_start = '<ul id="vocablist" style="padding-right:10px;padding-inline-start:10px;">';
         var vocablist_end = '</ul>';
-        var one_empty_box = '<li id="eachrow" style="background-color: #DCDCDC;display: block;margin-bottom: 10px;position: relative;height: 90px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 5px;padding-left: 5px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><p style= "padding-top: 5px;padding-left: 5px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING">Loading...</p><p id="PID_TRANS"></p></li>';
+        var one_empty_box = '<li id="eachrow" style="background-color: rgba(255,255,255,0.6);display: block;margin-bottom: 10px;position: relative;height: 90px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 10px;padding-left: 10px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><hr/><p style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING">Loading...</p><p id="PID_TRANS"></p></li>';
 
 //        var one_empty_box = '<li><div><p id="PID_WORD">Word</p><p id="PID_MEANING">Meaning</p><p id="PID_TRANS">Translation</p></div></li>';
         var n_boxes = ''
