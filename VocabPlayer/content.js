@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         var video = document.querySelector("video");
         var h = video.offsetHeight;
         height_moverlay = h+"px";
-        var inject_html_start = '<div id="video_overlays" style="display:block;position:absolute;top:0;bottom:0;right:0;background-color:rgba(0,0,0,0.5);width:40%;height:100%">';
+        var inject_html_start = '<div id="video_overlays" style="display:none;position:absolute;top:0;bottom:0;right:0;background-color:rgba(0,0,0,0.5);width:40%;height:100%">';
         //$("#video_overlays").css('height',height_moverlay);
         var inject_html_end = '</div>';
         var meaningslist_start = '<div id="meaningslist" style="overflow: auto;height: 450px;">';
@@ -26,6 +26,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 //        var video = document.querySelector("video");
         var next = inject_html_start + meaningslist_start + vocablist_start + n_boxes + vocablist_end + meaningslist_end + inject_html_end;
         video.insertAdjacentHTML('afterend', next);
+        $("#video_overlays").fadeIn();
         console.log(next);
     }
 
