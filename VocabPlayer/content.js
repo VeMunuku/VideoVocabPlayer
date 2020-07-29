@@ -68,17 +68,21 @@ else if(str.search("https://www.primevideo.com/") != -1 ){
         if(videoelement){
             videoelement.onpause = function(){
                 var cues = "";
-                var cls = document.getElementsByClassName("fg8afi5");
-                if(cls){
-                    if(cls.item(0)){
-                        cues = cls.item(0).textContent;
+                var SubtitleWindow = document.getElementsByClassName("atvwebplayersdk-captions-text fg8afi5");
+                if(SubtitleWindow){
+                    var spansc = SubtitleWindow.item(0);
+                    if (spansc) {
+                        var Subtitles = spansc.getElementsByTagName('span');
+                        for (i = 0; i < Subtitles.length; i++) {
+                            cues += Subtitles.item(i).textContent + " ";
+                        }
                     }
                 }
-
+                
                 if(!cues.length){
-                    var cls = document.getElementsByClassName("persistentPanel");
-                    if(cls){
-                        var spansc = cls.item(0);
+                    var SubtitleWindow = document.getElementsByClassName("persistentPanel");
+                    if(SubtitleWindow){
+                        var spansc = SubtitleWindow.item(0);
                         if(spansc){
                             var spans = spansc.getElementsByTagName('span');
                             if(spans.item(1)){
@@ -114,7 +118,7 @@ else if(str.search("https://www.netflix.com/") != -1) {
                         if(spansc){
                             var Subtitles = spansc.getElementsByTagName('span');
                             for (i = 0; i < Subtitles.length; i++) {
-                                cues += Subtitles.item(i).textContent;
+                                cues += Subtitles.item(i).textContent+ " ";
                             }
                         }
                 }
