@@ -7,6 +7,7 @@ function generateTable(table, data) {
 		'<th> <b>' + data[i].Word + '</th> </b>' +
 		'<th> <b>' + data[i].Meaning + '</th> </b>' +
 		'<th> <b>' + data[i].Translated + '</th> </b>' +
+		'<th> <b>' + data[i].VideoURL + '</th> </b>' +
 		'<th> <b>' + data[i].Caption + '</th> </b>' +
 		'<th> <b>' + data[i].Date + '</th> </b>' +
 		'</tr>';
