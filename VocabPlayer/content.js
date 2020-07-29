@@ -1,9 +1,20 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     if (request.todo == "displaySlider"){
-        alert("Got display request. Displaying UX... " + request.nitems + " items to display");
-        var inject_html_start = '<div id="video_overlays" style="font-size:20;position:absolute;float:right;width:320px;min-height:370px;background-color:#000;z-index:300000;">'
+//        alert("Got display request. Displaying UX... " + request.nitems + " items to display");
+        var video = document.querySelector("video");
+        var h = video.offsetHeight;
+        height_moverlay = h+"px";
+
+        var inject_html_start = '<div id="video_overlays" style="display:block;position:absolute;top:0;bottom:0;right:0;background-color:rgba(0,0,0,0.5);width:300px;height:auto">';
+        $("#video_overlays").css('height',height_moverlay);
         var inject_html_end = '</div>';
-        var one_empty_box = '<li><div><p id="PID_WORD">Word</p><p id="PID_MEANING">Meaning</p><p id="PID_TRANS">Translation</p></div></li>';
+        var meaningslist_start = '<div id="meaningslist" style="overflow: auto;height: 450px;">';
+        var meaningslist_end = '</div>';
+        var vocablist_start = '<ul id="vocablist" style="padding-right:10px;padding-inline-start:10px;">';
+        var vocablist_end = '</ul>';
+        var one_empty_box = '<li id="eachrow" style="background-color: #DCDCDC;display: block;margin-bottom: 10px;position: relative;height: 90px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 5px;padding-left: 5px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD"></p><p style= "padding-top: 5px;padding-left: 5px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING"></p><p id="PID_TRANS"></p></li>';
+
+//        var one_empty_box = '<li><div><p id="PID_WORD">Word</p><p id="PID_MEANING">Meaning</p><p id="PID_TRANS">Translation</p></div></li>';
         var n_boxes = ''
         for (i = 0; i < request.nitems; i++) {
             var my_empty_box = (' ' + one_empty_box).slice(1);
@@ -12,17 +23,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
             my_empty_box = my_empty_box.replace("PID_TRANS", "PID_TRANS_" + i);
             n_boxes += my_empty_box;
         }
-        var video = document.querySelector("video");
-        var next = inject_html_start + n_boxes + inject_html_end;
+//        var video = document.querySelector("video");
+        var next = inject_html_start + meaningslist_start + vocablist_start + n_boxes + vocablist_end + meaningslist_end + inject_html_end;
         video.insertAdjacentHTML('afterend', next);
+        console.log(next);
     }
+
     else if(request.todo == 'updateSlider'){
-        alert("Got words request. Updating UX... " + JSON.stringify(request.meaning));
+//        alert("Got words request. Updating UX... " + JSON.stringify(request.meaning));
         var thisindex = request.meaning.index;
         var wordID = "PID_WORD_" + thisindex;
         var meaningID = "PID_MEANING_" + thisindex;
         var transID = "PID_TRANS_" + thisindex;
-        alert(wordID + meaningID + transID);
+//        alert(wordID + meaningID + transID);
         var wordp = document.getElementById(wordID);
         var meaningp = document.getElementById(meaningID);
         var transp = document.getElementById(transID);
