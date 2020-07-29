@@ -1,5 +1,6 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     if (request.todo == "displaySlider"){
+<<<<<<< Updated upstream
         //trigger UX slider with animation;
 
         /* For Debugging purpose
@@ -19,6 +20,36 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     else if(request.todo == 'updateSlider'){
         //have word meanings list; split them and update
         //the UX;
+=======
+        alert("Got display request. Displaying UX... " + request.nitems + " items to display");
+        var inject_html_start = '<div id="video_overlays" style="font-size:20;position:absolute;float:right;width:320px;min-height:370px;background-color:#000;z-index:300000;">'
+        var inject_html_end = '</div>';
+        var one_empty_box = '<li><div><p id="PID_WORD">Word</p><p id="PID_MEANING">Meaning</p><p id="PID_TRANS">Translation</p></div></li>';
+        var n_boxes = ''
+        for (i = 0; i < request.nitems; i++) {
+            var my_empty_box = (' ' + one_empty_box).slice(1);
+            my_empty_box = my_empty_box.replace("PID_WORD", "PID_WORD_" + i);
+            my_empty_box = my_empty_box.replace("PID_MEANING", "PID_MEANING_" + i);
+            my_empty_box = my_empty_box.replace("PID_TRANS", "PID_TRANS_" + i);
+            n_boxes += my_empty_box;
+        }
+        var vidparent = document.getElementsByClassName("html5-video-container")[0];
+        vidparent.innerHTML = inject_html_start + n_boxes + inject_html_end + vidparent.innerHTML;
+    }
+    else if(request.todo == 'updateSlider'){
+        alert("Got words request. Updating UX... " + JSON.stringify(request.meaning));
+        var thisindex = request.meaning.index;
+        var wordID = "PID_WORD_" + thisindex;
+        var meaningID = "PID_MEANING_" + thisindex;
+        var transID = "PID_TRANS_" + thisindex;
+        alert(wordID + meaningID + transID);
+        var wordp = document.getElementById(wordID);
+        var meaningp = document.getElementById(meaningID);
+        var transp = document.getElementById(transID);
+        wordp.innerHTML = request.meaning.word;
+        meaningp.innerHTML = request.meaning.meaning;
+        transp.innerHTML = ""; // none for now.
+>>>>>>> Stashed changes
     }
 })
 
