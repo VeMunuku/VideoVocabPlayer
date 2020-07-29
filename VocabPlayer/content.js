@@ -36,8 +36,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
         for (i = 0; i < request.nitems; i++) {
             var lielement = document.getElementById("LIID_" + i);
-            lielement.addEventListener("click", function(){
-                var collection = lielement.getElementsByTagName('p');
+            lielement.addEventListener("click", function(a, b){
+                var collection = a.currentTarget.getElementsByTagName('p');
                 var word = "";
                 var meaning = "";
                 var translated = "";
