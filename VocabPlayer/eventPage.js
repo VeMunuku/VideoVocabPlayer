@@ -1,3 +1,13 @@
+chrome.storage.sync.get('language', function(selected){
+    if(selected.language == "Telugu"){
+        language_code = "te";
+    }
+    else if(selected.language == "Hindi"){
+        language_code = "hi";
+    }
+    alert(language_code);
+});
+
 chrome.runtime.onConnect.addListener(function(port) {
     console.assert(port.name == "SubtitlesContainer");
     port.onMessage.addListener(function(msg) {
@@ -24,7 +34,7 @@ function downloadCaptions(Subtitles){
 
 function getDefinition(word, order){
     var endpoint = "http://hackathonbox.westus2.cloudapp.azure.com:8000/h4ck4th0n/";
-    var url = endpoint + word + "/define/fr";
+    var url = endpoint + word + "/define/" + language_code;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
