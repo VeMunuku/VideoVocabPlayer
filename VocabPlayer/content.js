@@ -231,7 +231,14 @@ function addBookmark(newBookmark){
         if(bookmarked.bookmarkedWords){
             newList = bookmarked.bookmarkedWords;
         }
+		var i;
+		for(i = 0; i < newList.length; i ++){
+			if((newBookmark.Word).localeCompare(newList[i].Word)){
+				return false;
+			}
+		}
         newList.push(newBookmark);
         chrome.storage.sync.set({'bookmarkedWords': newList});
+		return true;
     });
 }

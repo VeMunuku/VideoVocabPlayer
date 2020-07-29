@@ -38,7 +38,14 @@ var data = [
 */
 chrome.storage.sync.get('language', function(selected){
 	var lang = document.getElementById('language');
-	lang.innerHTML = selected.language;
+	if(selected.language){
+		lang.innerHTML = selected.language;
+	}
+	else{
+		lang.innerHTML = "English";
+		chrome.storage.sync.set({'language': "English"});
+	}
+	
 });
 chrome.storage.sync.get('bookmarkedWords', function(bookmarked){
 	var data = [];
