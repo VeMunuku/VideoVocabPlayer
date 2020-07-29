@@ -6,7 +6,7 @@ function generateTable(table, data) {
 	badge.innerHTML = 
 		'<th> <b>' + data[i].Word + '</th> </b>' +
 		'<th> <b>' + data[i].Meaning + '</th> </b>' +
-		'<th> <b>' + data[i].Language + '</th> </b>' +
+		'<th> <b>' + data[i].Translated + '</th> </b>' +
 		'<th> <b>' + data[i].Video_Title + '</th> </b>' +
 		'<th> <b>' + data[i].Caption + '</th> </b>' +
 		'<th> <b>' + data[i].Date + '</th> </b>' +

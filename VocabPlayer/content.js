@@ -53,7 +53,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     }
                     var d = new Date();
                     var date = d.getMonth() + "/" + d.getDay()+"/"+d.getFullYear();
-                    var payload = '{"Word": "'+word+'","Meaning": "'+meaning+'","Translated": "'+translated+'","Video_Title": "'+vtitle+'","Caption": "'+cues+'","Date": "'+date+'"}';
+                    var payload = {"Word": word,"Meaning": meaning,"Translated": translated,"Video_Title": vtitle,"Caption": cues,"Date": date};
                     alert(payload);
                     addBookmark(payload);
                 }
