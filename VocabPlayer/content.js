@@ -1,8 +1,11 @@
 var cues = "";
 var vtitle = "Video Title";
+var video_paused = false;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.todo == "displaySlider") {
+        if(video_paused == false)
+            return;
         //alert("Got display request. Displaying UX... " + request.nitems + " items to display");
         var video = document.querySelector("video");
         var h = video.offsetHeight;
@@ -14,7 +17,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         var meaningslist_end = '</div>';
         var vocablist_start = '<ul id="vocablist" style="padding-right:10px;padding-inline-start:10px;">';
         var vocablist_end = '</ul>';
-        var one_empty_box = '<li id="LIID" style="background-color: rgba(255,255,255,0.7);display: block;margin-bottom: 10px;position: relative;height: 120px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 10px;padding-left: 10px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><hr><p style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING"></p><hr><p  style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_TRANS"></p></li>';
+        var one_empty_box = '<li id="LIID" onclick="event.stopPropagation()" style="background-color: rgba(255,255,255,0.7);display: block;margin-bottom: 10px;position: relative;height: 120px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 10px;padding-left: 10px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><hr><p style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING"></p><hr><p  style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_TRANS"></p></li>';
 
         //var one_empty_box = '<li><div><p id="PID_WORD">Word</p><p id="PID_MEANING">Meaning</p><p id="PID_TRANS">Translation</p></div></li>';
         var n_boxes = ''
@@ -104,6 +107,7 @@ if (str.search("youtube") != -1) {
                 }
             }
             if (cues.length) {
+                video_paused = true;
                 //alert("from content : youtube: "+ cues);
                 var port = chrome.runtime.connect({ name: "SubtitlesContainer" });
                 port.postMessage({ todo: "downloadCaptions", Subtitles: cues });
@@ -111,6 +115,7 @@ if (str.search("youtube") != -1) {
         }
 
         videoelement.onplay = function () {
+            video_paused = false;
             var delme = document.getElementById("video_overlays");
             if (delme) {
                 delme.querySelectorAll('*').forEach(n => n.remove());
@@ -158,6 +163,7 @@ else if (str.search("https://www.primevideo.com/") != -1) {
                     }
                 }
                 if (cues.length) {
+                    video_paused = true;
                     //alert("from content : AmazonPrime: " + cues);
                     var port = chrome.runtime.connect({ name: "SubtitlesContainer" });
                     port.postMessage({ todo: "downloadCaptions", Subtitles: cues });
@@ -165,6 +171,7 @@ else if (str.search("https://www.primevideo.com/") != -1) {
             }
 
             videoelement.onplay = function () {
+                video_paused = false;
                 var delme = document.getElementById("video_overlays");
                 if (delme) {
                     delme.querySelectorAll('*').forEach(n => n.remove());
@@ -197,6 +204,7 @@ else if (str.search("https://www.netflix.com/") != -1) {
                 }
 
                 if (cues.length) {
+                    video_paused = true;
                     //alert("from content : NetFlix: " + cues);
                     var port = chrome.runtime.connect({ name: "SubtitlesContainer" });
                     port.postMessage({ todo: "downloadCaptions", Subtitles: cues });
@@ -204,6 +212,7 @@ else if (str.search("https://www.netflix.com/") != -1) {
             }
             
             videoelement.onplay = function () {
+                video_paused = false;
                 var delme = document.getElementById("video_overlays");
                 if (delme) {
                     delme.querySelectorAll('*').forEach(n => n.remove());
