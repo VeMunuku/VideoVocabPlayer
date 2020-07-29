@@ -24,16 +24,16 @@ function downloadCaptions(Subtitles){
 
 function getDefinition(word, order){
     var endpoint = "http://hackathonbox.westus2.cloudapp.azure.com:8000/h4ck4th0n/";
-    var url = endpoint + word + "/define";
+    var url = endpoint + word + "/define/fr";
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var ret = JSON.parse(xhttp.responseText);
             console.log(ret);
-            if(ret.error || ret.definitions.length == 0){
+            if(ret.error || ret.define.definitions.length == 0){
                 sendWordAndMeaningToUX({index: order.findIndex(x => x == word), word: word, meaning: 'error'})
             } else{
-                sendWordAndMeaningToUX({index: order.findIndex(x => x == word), word: word, meaning: ret.definitions[0]['definition']})
+                sendWordAndMeaningToUX({index: order.findIndex(x => x == word), word: word, meaning: ret.define.definitions[0]['definition'], trans: ret.trans})
             }
         }
     };
