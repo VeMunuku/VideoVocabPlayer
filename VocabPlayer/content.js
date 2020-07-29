@@ -7,16 +7,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         var inject_html_start = '<div id="video_overlays" style="display:block;position:absolute;top:0;bottom:0;right:0;background-color:rgba(0,0,0,0.5);width:40%;height:100%">';
         //$("#video_overlays").css('height',height_moverlay);
         var inject_html_end = '</div>';
-        var meaningslist_start = '<div id="meaningslist" style="overflow: auto;height: 450px;">';
+        var meaningslist_start = '<div id="meaningslist" style="overflow: auto;height:'+height_moverlay+';">';
         var meaningslist_end = '</div>';
         var vocablist_start = '<ul id="vocablist" style="padding-right:10px;padding-inline-start:10px;">';
         var vocablist_end = '</ul>';
-        var one_empty_box = '<li id="eachrow" style="background-color: #DCDCDC;display: block;margin-bottom: 10px;position: relative;height: 90px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 5px;padding-left: 5px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD"></p><p style= "padding-top: 5px;padding-left: 5px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING"></p><p id="PID_TRANS"></p></li>';
+        var one_empty_box = '<li id="LIID" style="background-color: rgba(255,255,255,0.7);display: block;margin-bottom: 10px;position: relative;height: 120px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 10px;padding-left: 10px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><hr><p style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING">Loading...</p><hr><p  style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_TRANS"></p></li>';
 
         //var one_empty_box = '<li><div><p id="PID_WORD">Word</p><p id="PID_MEANING">Meaning</p><p id="PID_TRANS">Translation</p></div></li>';
         var n_boxes = ''
         for (i = 0; i < request.nitems; i++) {
             var my_empty_box = (' ' + one_empty_box).slice(1);
+            my_empty_box = my_empty_box.replace("LIID", "LIID_" + i);
             my_empty_box = my_empty_box.replace("PID_WORD", "PID_WORD_" + i);
             my_empty_box = my_empty_box.replace("PID_MEANING", "PID_MEANING_" + i);
             my_empty_box = my_empty_box.replace("PID_TRANS", "PID_TRANS_" + i);
@@ -38,10 +39,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         var wordp = document.getElementById(wordID);
         var meaningp = document.getElementById(meaningID);
         var transp = document.getElementById(transID);
+
+        // check for error boxes. and get rid of them.
+        if(request.meaning.meaning == "error"){
+            var delme = wordp.parentElement;
+            if(delme){
+                delme.querySelectorAll('*').forEach(n => n.remove());
+                delme.remove();
+            }    
+        }
+//        alert(wordID + meaningID + transID);
         wordp.innerHTML = request.meaning.word;
         meaningp.innerHTML = request.meaning.meaning;
-        transp.innerHTML = ""; // none for now.
-
+        // transp.innerHTML = ""; // none for now.
+        wordp.innerHTML += " / " + request.meaning.trans;
     }
 })
 
@@ -77,7 +88,6 @@ if (str.search("youtube") != -1) {
             }
         }
     }
-
 }
 else if (str.search("https://www.primevideo.com/") != -1) {
     //write for prime video.

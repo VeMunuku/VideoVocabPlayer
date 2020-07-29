@@ -1,3 +1,12 @@
+chrome.storage.sync.get('language', function(selected){
+    if(selected.language == "Telugu"){
+        language_code = "te";
+    }
+    else if(selected.language == "Hindi"){
+        language_code = "hi";
+    }
+});
+
 chrome.runtime.onConnect.addListener(function(port) {
     console.assert(port.name == "SubtitlesContainer");
     port.onMessage.addListener(function(msg) {
@@ -9,7 +18,7 @@ chrome.runtime.onConnect.addListener(function(port) {
   });
 
 function downloadCaptions(Subtitles){
-    //alert("DownloadCaptions: " + Subtitles);
+        //alert("DownloadCaptions: " + Subtitles);
     list = Subtitles.toLowerCase().split(/[^A-Za-z]/);
     var filtered_set = new Set(list.filter(x => !consts_stopwords.has(x)));
     if(filtered_set.size == 0)
@@ -24,16 +33,16 @@ function downloadCaptions(Subtitles){
 
 function getDefinition(word, order){
     var endpoint = "http://hackathonbox.westus2.cloudapp.azure.com:8000/h4ck4th0n/";
-    var url = endpoint + word + "/define";
+    var url = endpoint + word + "/define/" + language_code;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var ret = JSON.parse(xhttp.responseText);
             console.log(ret);
-            if(ret.error || ret.definitions.length == 0){
+            if(ret.error || ret.define.definitions.length == 0){
                 sendWordAndMeaningToUX({index: order.findIndex(x => x == word), word: word, meaning: 'error'})
             } else{
-                sendWordAndMeaningToUX({index: order.findIndex(x => x == word), word: word, meaning: ret.definitions[0]['definition']})
+                sendWordAndMeaningToUX({index: order.findIndex(x => x == word), word: word, meaning: ret.define.definitions[0]['definition'], trans: ret.trans})
             }
         }
     };
