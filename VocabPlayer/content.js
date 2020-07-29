@@ -1,14 +1,10 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+    alert(request.todo);
     if (request.todo == "displaySlider"){
-        //trigger UX slider with animation;
-
-        /* For Debugging purpose
-            var video = document.querySelector('video');
-            video.muted = !video.muted;
-            alert("Display Slider - Video Mute Status "+video.muted);
-        */
+        alert("Got display request. Displaying UX... ");
     }
     else if(request.todo == 'updateSlider'){
+        alert("Got words request. Updating UX... ");
         //have word meanings list; split them and update
         //the UX;
     }

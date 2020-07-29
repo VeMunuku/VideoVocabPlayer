@@ -11,6 +11,7 @@ chrome.runtime.onConnect.addListener(function(port) {
 function downloadCaptions(Subtitles){
     alert("DownloadCaptions: " + Subtitles);
     list = Subtitles.toLowerCase().split(/[^A-Za-z]/);
+    sendDisplaySliderMessage(10);
     meanings = new Set();
     list.forEach(element=> {
         getDefinition(element, meanings);
