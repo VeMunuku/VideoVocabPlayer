@@ -1,5 +1,4 @@
 var cues = "";
-var vtitle = "Video Title";
 var video_paused = false;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -54,7 +53,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     var res = word.split("/");
                     var d = new Date();
                     var date = d.getMonth() + "/" + d.getDay()+"/"+d.getFullYear();
-                    var payload = {"Word": res[0],"Meaning": meaning,"Translated": res[1],"Video_Title": vtitle,"Caption": cues,"Date": date};
+                    var payload = {"Word": res[0],"Meaning": meaning,"Translated": res[1],"Caption": cues,"Date": date};
                     addBookmark(payload);
                 }
             });
