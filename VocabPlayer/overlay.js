@@ -16,6 +16,5 @@ function bookmark(e) {
     newBookmarkedWords.push(newWord);
   }
   chrome.storage.sync.set('bookmarkedWords', newBookmarkedWords);
-  });
   e.classList.toggle('far');
 }
