@@ -10,7 +10,6 @@ chrome.runtime.onConnect.addListener(function(port) {
 
 function downloadCaptions(Subtitles){
     alert("DownloadCaptions: " + Subtitles);
-    alert(consts_stopwords);
     list = Subtitles.toLowerCase().split(/[^A-Za-z]/);
     meanings = new Set();
     list.forEach(element=> {
