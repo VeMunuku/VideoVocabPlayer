@@ -27,7 +27,7 @@ if(str.search("youtube") != -1){
         if (SubtitleWindow) {
             var Subtitles = SubtitleWindow.getElementsByClassName("ytp-caption-segment");
             for (i = 0; i < Subtitles.length; i++) {
-                cues += Subtitles.item(i).textContent;
+                cues += Subtitles.item(i).textContent + " ";
             }
         }
         //alert("from content : youtube: "+ cues);
