@@ -4,10 +4,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         var video = document.querySelector("video");
         var h = video.offsetHeight;
         height_moverlay = h+"px";
-        var inject_html_start = '<div id="video_overlays" style="display:block;position:absolute;top:0;bottom:0;right:0;background-color:rgba(0,0,0,0.5);width:40%;height:100%">';
-        //$("#video_overlays").css('height',height_moverlay);
+        var inject_html_start = '<div id="video_overlays" style="display:block;position:absolute;top:0;bottom:0;right:0;background-color:rgba(0,0,0,0.5);width:40%;height:'+height_moverlay+';">';
         var inject_html_end = '</div>';
-        var meaningslist_start = '<div id="meaningslist" style="overflow: auto;height: 450px;">';
+        var meaningslist_start = '<div id="meaningslist" style="overflow: auto;height:'+height_moverlay+';">';
         var meaningslist_end = '</div>';
         var vocablist_start = '<ul id="vocablist" style="padding-right:10px;padding-inline-start:10px;">';
         var vocablist_end = '</ul>';
