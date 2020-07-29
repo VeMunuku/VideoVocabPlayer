@@ -51,10 +51,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                         else if(i == 2)
                             translated = pelement.textContent;
                     }
+                    var res = word.split("/");
                     var d = new Date();
                     var date = d.getMonth() + "/" + d.getDay()+"/"+d.getFullYear();
-                    var payload = {"Word": word,"Meaning": meaning,"Translated": translated,"Video_Title": vtitle,"Caption": cues,"Date": date};
-                    alert(payload);
+                    var payload = {"Word": res[0],"Meaning": meaning,"Translated": res[1],"Video_Title": vtitle,"Caption": cues,"Date": date};
                     addBookmark(payload);
                 }
             });
