@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         var meaningslist_end = '</div>';
         var vocablist_start = '<ul id="vocablist" style="padding-right:10px;padding-inline-start:10px;">';
         var vocablist_end = '</ul>';
-        var one_empty_box = '<li id="LIID" onclick="event.stopPropagation()" style="background-color: rgba(255,255,255,0.7);display: block;margin-bottom: 10px;position: relative;height: 120px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 10px;padding-left: 10px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><hr><p style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING"></p><hr><p  style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_TRANS"></p></li>';
+        var one_empty_box = '<li id="LIID" onclick="event.stopPropagation()" style="background-color: rgba(255,255,255,0.7);display: block;margin-bottom: 10px;position: relative;height: 120px;width: auto;margin-bottom: 10px;"><p style= "padding-top: 10px;padding-left: 10px;font-size: 20px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_WORD">Loading...</p><p style= "padding-top: 10px;padding-left: 10px;font-size: 18px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_MEANING"></p><p  style= "padding-top: 10px;padding-left: 10px;font-size: 15px;font-style: sans-serif;font-family: sans-serif;color: black;" id="PID_TRANS"></p></li>';
 
         //var one_empty_box = '<li><div><p id="PID_WORD">Word</p><p id="PID_MEANING">Meaning</p><p id="PID_TRANS">Translation</p></div></li>';
         var n_boxes = ''
@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     var res = word.split("/");
                     var d = new Date();
                     var date = d.getMonth() + "/" + d.getDay()+"/"+d.getFullYear();
-                    var payload = {"Word": res[0],"Meaning": meaning,"Translated": res[1],"VideoURL": document.URL,"Caption": cues,"Date": date};
+                    var payload = {"Word": res[0],"Meaning": meaning,"Translated": res[1],"Caption": cues,"Date": date, "Source": document.URL};
                     addBookmark(payload);
                 }
             });

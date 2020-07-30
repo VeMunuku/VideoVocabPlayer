@@ -7,6 +7,9 @@ chrome.storage.sync.get('language', function(selected){
     }
     else if(selected.language == "Tamil"){
         language_code = "ta";
+    }    
+    else if(selected.language == "French"){
+        language_code = "fr";
     }
     else{
         language_code = "hi";
