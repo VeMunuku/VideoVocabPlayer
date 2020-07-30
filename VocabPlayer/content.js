@@ -233,7 +233,7 @@ function addBookmark(newBookmark){
         }
 		var i;
 		for(i = 0; i < newList.length; i ++){
-			if((newBookmark.Word).localeCompare(newList[i].Word)){
+			if((newBookmark.Word).localeCompare(newList[i].Word) == 0){
 				return false;
 			}
 		}
