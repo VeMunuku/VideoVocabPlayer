@@ -139,17 +139,20 @@ else if (str.search("https://www.primevideo.com/") != -1) {
                 cues = "";
                 var SubtitleWindow = document.getElementsByClassName("atvwebplayersdk-captions-text fg8afi5");
                 if (SubtitleWindow) {
-                    var spansc = SubtitleWindow.item(0);
-                    if (spansc) {
-                        var Subtitles = spansc.getElementsByTagName('span');
-                        for (i = 0; i < Subtitles.length; i++) {
-                            cues += Subtitles.item(i).textContent + " ";
-                        }
-                        //sometime subs are int parent class fg8afi5 and not in span
-                        if (!cues.length) {
-                            cues = spansc.textContent + " ";
+                    for(x = 0; x < SubtitleWindow.length; x++){
+                        var spansc = SubtitleWindow.item(x);
+                        if (spansc) {
+                            var Subtitles = spansc.getElementsByTagName('span');
+                            for (i = 0; i < Subtitles.length; i++) {
+                                cues += Subtitles.item(i).textContent + " ";
+                            }
+                            //sometime subs are int parent class fg8afi5 and not in span
+                            if (!cues.length) {
+                                cues = spansc.textContent + " ";
+                            }
                         }
                     }
+                    
                 }
 
                 if (!cues.length) {
@@ -196,12 +199,15 @@ else if (str.search("https://www.netflix.com/") != -1) {
                 cues = "";
                 var SubtitleWindow = document.getElementsByClassName('player-timedtext-text-container')
                 if (SubtitleWindow) {
-                    var spansc = SubtitleWindow.item(0);
-                    if (spansc) {
-                        var Subtitles = spansc.getElementsByTagName('span');
-                        for (i = 0; i < Subtitles.length; i++) {
-                            cues += Subtitles.item(i).textContent + " ";
+                    for(x = 0; x < SubtitleWindow.length; x++){
+                        var spansc = SubtitleWindow.item(x);
+                        if (spansc) {
+                            var Subtitles = spansc.getElementsByTagName('span');
+                            for (i = 0; i < Subtitles.length; i++) {
+                                cues += Subtitles.item(i).textContent + " ";
+                            }
                         }
+    
                     }
                 }
 
