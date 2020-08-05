@@ -11,6 +11,12 @@ chrome.storage.sync.get('language', function(selected){
     else if(selected.language == "French"){
         language_code = "fr";
     }
+    else if(selected.language == "Spanish"){
+        language_code = "es";
+    }
+    else if(selected.language == "Chinese"){
+        language_code = "zh";
+    }
     else{
         language_code = "hi";
     }
